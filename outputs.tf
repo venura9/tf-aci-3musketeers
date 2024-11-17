@@ -3,6 +3,6 @@ output "container_ipv4_address" {
 }
 
 output "container_fqdn" {
-  value = azurerm_container_group.container.fqdn
+  value = "http://${azurerm_container_group.container.fqdn}:${variables.port}"
 }
 
