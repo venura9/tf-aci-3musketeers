@@ -17,7 +17,7 @@ provider "azurerm" {
 
 resource "azurerm_resource_group" "rg" {
   name     = "${var.prefix}-ResourceGroup"
-  location = "Australia East"
+  location = $var.resource_group_location
 }
 
 resource "random_string" "container_name" {

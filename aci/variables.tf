@@ -1,6 +1,10 @@
+variable "prefix" {
+  default = "terraform"
+}
+
 variable "resource_group_location" {
   type        = string
-  default     = "eastus"
+  default     = "australiaeast"
   description = "Location for all resources."
 }
 
@@ -25,13 +29,13 @@ variable "container_name_prefix" {
 variable "image" {
   type        = string
   description = "Container image to deploy. Should be of the form repoName/imagename:tag for images stored in public Docker Hub, or a fully qualified URI for other registries. Images from private registries require additional registry credentials."
-  default     = "mcr.microsoft.com/azuredocs/aci-helloworld"
+  default     = "ghcr.io/venura9/example-golang-api:go-azure-01"
 }
 
 variable "port" {
   type        = number
   description = "Port to open on the container and the public IP address."
-  default     = 80
+  default     = 8080
 }
 
 variable "cpu_cores" {
