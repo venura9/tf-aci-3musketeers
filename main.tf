@@ -10,6 +10,7 @@ terraform {
       version = "~>3.0"
     }
   }
+  cloud{}
 }
 provider "azurerm" {
   features {}
