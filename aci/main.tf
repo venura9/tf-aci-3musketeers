@@ -16,7 +16,7 @@ provider "azurerm" {
 }
 
 resource "azurerm_resource_group" "rg" {
-  name     = "${var.prefix}-ResourceGroup"
+  name     = "${var.container_group_name_prefix}-${var.prefix}-ResourceGroup"
   location = $var.resource_group_location
 }
 
