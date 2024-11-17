@@ -1,9 +1,0 @@
-services:
-    terraform:
-        image: hashicorp/terraform:latest
-        env_file: ".env"
-        environment:
-            - TF_IN_AUTOMATION=1
-        volumes:
-        - .:/workspace
-        working_dir: /workspace

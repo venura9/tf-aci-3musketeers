@@ -6,12 +6,10 @@ plan:
 	docker compose run --rm terraform plan -input=false -out=tfplan
 .PHONY: plan
 
-#docker compose run --rm terraform apply -auto-approve
 apply:
 	docker compose run --rm terraform apply -input=false -auto-approve
 .PHONY: apply
 
-#docker compose run --rm terraform destroy -auto-approve
 destroy:
-	docker compose run --rm terraform destroy -input=false 
+	docker compose run --rm terraform destroy -input=false -auto-approve
 .PHONY: destroy
