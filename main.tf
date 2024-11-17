@@ -32,6 +32,7 @@ resource "azurerm_container_group" "container" {
   name                = "${var.container_group_name_prefix}-${random_string.container_name.result}"
   location            = azurerm_resource_group.rg.location
   resource_group_name = azurerm_resource_group.rg.name
+  dns_name_label      = "${var.container_group_name_prefix}"
   ip_address_type     = "Public"
   os_type             = "Linux"
   restart_policy      = var.restart_policy
