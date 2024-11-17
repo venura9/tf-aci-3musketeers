@@ -8,7 +8,7 @@ plan:
 
 #docker compose run --rm terraform apply -auto-approve
 apply:
-	docker compose run --rm terraform apply -input=false 
+	docker compose run --rm terraform apply -input=false -auto-approve
 .PHONY: apply
 
 #docker compose run --rm terraform destroy -auto-approve
