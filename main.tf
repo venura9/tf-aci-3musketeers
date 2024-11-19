@@ -62,4 +62,5 @@ resource "azurerm_storage_account" "caddy_storage" {
 resource "azurerm_storage_share" "caddy_share_data" {
   name                 = "caddy_share_data"
   storage_account_name = azurerm_storage_account.caddy_storage.name
+  quota                = 1
 }
