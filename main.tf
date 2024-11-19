@@ -62,11 +62,6 @@ resource "azurerm_container_group" "container" {
       protocol = "TCP"
     }
 
-    ports {
-      port     = 80
-      protocol = "TCP"
-    }
-
     volume {
       name                 = azurerm_storage_share.caddy_share_data.name
       mount_path           = "/data"
@@ -75,7 +70,7 @@ resource "azurerm_container_group" "container" {
       share_name           = azurerm_storage_share.caddy_share_data.name
     }
 
-    commands = ["caddy", "reverse-proxy", "--from", "${var.container_group_name_prefix}.${var.resource_group_location}.azurecontainer.io", "--to", ":${var.port}", "\"caddy", "reverse-proxy", "--from", ":80", "--to", ":443"] 
+    commands = ["caddy", "reverse-proxy", "--from", "${var.container_group_name_prefix}.${var.resource_group_location}.azurecontainer.io", "--to", ":${var.port}"] 
 
   }
 }
