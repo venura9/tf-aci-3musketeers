@@ -51,10 +51,38 @@ resource "azurerm_container_group" "container" {
     cpu    = var.cpu_cores
     memory = var.memory_in_gb
 
+//    ports {
+//      port     = var.port
+//      protocol = "TCP"
+//    }
+  }
+
+
+  container {
+    name   = "caddy"
+    image  = "caddy"
+    cpu    = var.cpu_cores
+    memory = var.memory_in_gb
+
     ports {
-      port     = var.port
+      port     = 443
       protocol = "TCP"
     }
+
+    ports {
+      port     = 80
+      protocol = "TCP"
+    }
+
+    volume {
+      name                 = azurerm_storage_share.caddy_share_data.name
+      mount_path           = "/data"
+      storage_account_name = azurerm_storage_account.caddy_storage.name
+      storage_account_key  = azurerm_storage_account.caddy_storage.primary_access_key
+      share_name           = azurerm_storage_share.caddy_share_data.name
+    }
+
+    commands = ["caddy", "reverse-proxy", "--from", "${var.container_group_name_prefix}.${var.resource_group_location}.azurecontainer.io", "--to", "localhost:${var.port}"]
   }
 }
 
