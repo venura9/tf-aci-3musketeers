@@ -75,7 +75,8 @@ resource "azurerm_container_group" "container" {
       share_name           = azurerm_storage_share.caddy_share_data.name
     }
 
-    commands = ["caddy", "reverse-proxy", "--from", "${var.container_group_name_prefix}.${var.resource_group_location}.azurecontainer.io", "--to", "localhost:${var.port}"]
+    //commands = ["caddy", "reverse-proxy", "--from", "${var.container_group_name_prefix}.${var.resource_group_location}.azurecontainer.io", "--to", "localhost:${var.port}"]
+    commands = ["caddy", "reverse-proxy", "--from", ":443", "--to", ":${var.port}"]
   }
 }
 
