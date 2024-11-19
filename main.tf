@@ -59,12 +59,12 @@ resource "azurerm_container_group" "container" {
 }
 
 resource "azurerm_storage_account" "caddy_storage" {
-  name                      = random_string.storage_account_name.result
-  location                  = azurerm_resource_group.rg.location
-  resource_group_name       = azurerm_resource_group.rg.name
-  account_tier              = "Standard"
-  account_replication_type  = "LRS"
-  enable_https_traffic_only = true
+  name                       = random_string.storage_account_name.result
+  location                   = azurerm_resource_group.rg.location
+  resource_group_name        = azurerm_resource_group.rg.name
+  account_tier               = "Standard"
+  account_replication_type   = "LRS"
+  https_traffic_only_enabled = true
 }
 
 resource "azurerm_storage_share" "caddy_share_data" {
