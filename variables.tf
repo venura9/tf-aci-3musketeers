@@ -41,13 +41,13 @@ variable "port" {
 variable "cpu_cores" {
   type        = number
   description = "The number of CPU cores to allocate to the container."
-  default     = 1
+  default     = 0.5
 }
 
 variable "memory_in_gb" {
   type        = number
   description = "The amount of memory to allocate to the container in gigabytes."
-  default     = 2
+  default     = 0.5
 }
 
 variable "restart_policy" {
