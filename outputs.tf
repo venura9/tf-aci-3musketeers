@@ -3,6 +3,6 @@ output "container_ipv4_address" {
 }
 
 output "container_fqdn" {
-  value = "https://${azurerm_container_group.container.fqdn}:${var.port}"
+  value = "https://${azurerm_container_group.container.fqdn}"
 }
 
