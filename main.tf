@@ -28,7 +28,6 @@ resource "random_string" "container_name" {
   special = false
 }
 
-
 resource "random_string" "storage_account_name" {
   length  = 24
   lower   = true
@@ -51,7 +50,6 @@ resource "azurerm_container_group" "container" {
     cpu    = var.cpu_cores
     memory = var.memory_in_gb
   }
-
 
   container {
     name   = "caddy"
