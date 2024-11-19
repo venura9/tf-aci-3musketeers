@@ -28,6 +28,14 @@ resource "random_string" "container_name" {
   special = false
 }
 
+
+resource "random_string" "storage_account_name" {
+  length  = 24
+  lower   = true
+  upper   = false
+  special = false
+}
+
 resource "azurerm_container_group" "container" {
   name                = "${var.container_group_name_prefix}-${random_string.container_name.result}"
   location            = azurerm_resource_group.rg.location
@@ -51,9 +59,9 @@ resource "azurerm_container_group" "container" {
 }
 
 resource "azurerm_storage_account" "caddy_storage" {
-  name                      = "${var.container_group_name_prefix}-${random_string.container_name.result}"
-  location            = azurerm_resource_group.rg.location
-  resource_group_name = azurerm_resource_group.rg.name
+  name                      = random_string.storage_account_name.result
+  location                  = azurerm_resource_group.rg.location
+  resource_group_name       = azurerm_resource_group.rg.name
   account_tier              = "Standard"
   account_replication_type  = "LRS"
   enable_https_traffic_only = true
