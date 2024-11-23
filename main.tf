@@ -99,7 +99,7 @@ resource "azurerm_storage_share" "caddy_file_share_data" {
 }
 
 resource "azurerm_cosmosdb_account" "cosmos_db_account" {
-  name                = ${random_string.container_name.cosmos_db_account}
+  name                = ${random_string.cosmos_db_account.result}
   location            = azurerm_resource_group.rg.location
   resource_group_name = azurerm_resource_group.rg.name
   offer_type          = "Standard"
