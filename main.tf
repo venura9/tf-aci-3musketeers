@@ -35,7 +35,15 @@ resource "random_string" "storage_account_name" {
   special = false
 }
 
-resource "azurerm_container_group" "container" {
+
+resource "random_string" "cosmos_db_account" {
+  length  = 24
+  lower   = true
+  upper   = false
+  special = false
+}
+
+resource "azurerm_container_group" "azure_container_instance" {
   name                = "${var.container_group_name_prefix}-${random_string.container_name.result}"
   location            = azurerm_resource_group.rg.location
   resource_group_name = azurerm_resource_group.rg.name
@@ -63,11 +71,11 @@ resource "azurerm_container_group" "container" {
     }
 
     volume {
-      name                 = azurerm_storage_share.caddy_share_data.name
+      name                 = azurerm_storage_share.caddy_file_share_data.name
       mount_path           = "/data"
       storage_account_name = azurerm_storage_account.caddy_storage.name
       storage_account_key  = azurerm_storage_account.caddy_storage.primary_access_key
-      share_name           = azurerm_storage_share.caddy_share_data.name
+      share_name           = azurerm_storage_share.caddy_file_share_data.name
     }
 
     commands = ["caddy", "reverse-proxy", "--from", "${var.container_group_name_prefix}.${var.resource_group_location}.azurecontainer.io", "--to", ":${var.port}"] 
@@ -84,8 +92,27 @@ resource "azurerm_storage_account" "caddy_storage" {
   https_traffic_only_enabled = true
 }
 
-resource "azurerm_storage_share" "caddy_share_data" {
+resource "azurerm_storage_share" "caddy_file_share_data" {
   name                 = "caddy-share-data"
   storage_account_name = azurerm_storage_account.caddy_storage.name
   quota                = 1
 }
+
+resource "azurerm_cosmosdb_account" "cosmos_db_account" {
+  name                = ${random_string.container_name.cosmos_db_account}
+  location            = azurerm_resource_group.rg.location
+  resource_group_name = azurerm_resource_group.rg.name
+  offer_type          = "Standard"
+  kind                = "GlobalDocumentDB"
+  enable_automatic_failover = false
+  ree_tier_enabled = true
+  geo_location {
+    location          = azurerm_resource_group.rg.location
+    failover_priority = 0
+  }
+  consistency_policy {
+    consistency_level       = "BoundedStaleness"
+    max_interval_in_seconds = 300
+    max_staleness_prefix    = 100000
+  }
+} 
