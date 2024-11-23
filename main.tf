@@ -92,7 +92,7 @@ resource "azurerm_storage_account" "caddy_storage" {
 }
 
 resource "azurerm_storage_share" "caddy_file_share_data" {
-  name                 = "caddy-share-data"
+  name                 = "caddy-data"
   storage_account_name = azurerm_storage_account.caddy_storage.name
   quota                = 1
 }
@@ -103,7 +103,7 @@ resource "azurerm_cosmosdb_account" "cosmos_db_account" {
   resource_group_name = azurerm_resource_group.rg.name
   offer_type          = "Standard"
   kind                = "GlobalDocumentDB"
-  enable_automatic_failover = false
+  automatic_failover_enabled = false
   free_tier_enabled = true
   geo_location {
     location          = azurerm_resource_group.rg.location
