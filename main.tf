@@ -104,7 +104,7 @@ resource "azurerm_cosmosdb_account" "cosmos_db_account" {
   offer_type          = "Standard"
   kind                = "GlobalDocumentDB"
   enable_automatic_failover = false
-  ree_tier_enabled = true
+  free_tier_enabled = true
   geo_location {
     location          = azurerm_resource_group.rg.location
     failover_priority = 0
