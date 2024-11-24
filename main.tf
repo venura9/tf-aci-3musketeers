@@ -17,25 +17,11 @@ provider "azurerm" {
 }
 
 resource "azurerm_resource_group" "rg" {
-  name     = "${var.container_group_name_prefix}-${var.prefix}-ResourceGroup"
+  name     = "${var.container_group_name_prefix}-${var.prefix}"
   location = "${var.resource_group_location}"
 }
 
-resource "random_string" "container_name" {
-  length  = 25
-  lower   = true
-  upper   = false
-  special = false
-}
-
-resource "random_string" "storage_account_name" {
-  length  = 24
-  lower   = true
-  upper   = false
-  special = false
-}
-
-resource "random_string" "cosmos_db_account" {
+resource "random_string" "random" {
   length  = 24
   lower   = true
   upper   = false
@@ -43,7 +29,7 @@ resource "random_string" "cosmos_db_account" {
 }
 
 resource "azurerm_container_group" "azure_container_instance" {
-  name                = "${var.container_group_name_prefix}-${random_string.container_name.result}"
+  name                = "${var.container_group_name_prefix}-${random_string.random.result}"
   location            = azurerm_resource_group.rg.location
   resource_group_name = azurerm_resource_group.rg.name
   dns_name_label      = "${var.container_group_name_prefix}"
@@ -52,7 +38,7 @@ resource "azurerm_container_group" "azure_container_instance" {
   restart_policy      = var.restart_policy
 
   container {
-    name   = "${var.container_name_prefix}-${random_string.container_name.result}"
+    name   = "${var.container_name_prefix}-${random_string.random.result}"
     image  = var.image
     cpu    = var.cpu_cores
     memory = var.memory_in_gb
@@ -83,7 +69,7 @@ resource "azurerm_container_group" "azure_container_instance" {
 }
 
 resource "azurerm_storage_account" "caddy_storage" {
-  name                       = random_string.storage_account_name.result
+  name                       = random_string.random.result
   location                   = azurerm_resource_group.rg.location
   resource_group_name        = azurerm_resource_group.rg.name
   account_tier               = "Standard"
@@ -98,7 +84,7 @@ resource "azurerm_storage_share" "caddy_file_share_data" {
 }
 
 resource "azurerm_cosmosdb_account" "cosmos_db_account" {
-  name                = random_string.cosmos_db_account.result
+  name                = random_string.random.result
   location            = azurerm_resource_group.rg.location
   resource_group_name = azurerm_resource_group.rg.name
   offer_type          = "Standard"
