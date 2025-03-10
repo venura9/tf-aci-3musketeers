@@ -82,22 +82,3 @@ resource "azurerm_storage_share" "caddy_file_share_data" {
   storage_account_name = azurerm_storage_account.caddy_storage.name
   quota                = 1
 }
-
-resource "azurerm_cosmosdb_account" "cosmos_db_account" {
-  name                = random_string.random.result
-  location            = azurerm_resource_group.rg.location
-  resource_group_name = azurerm_resource_group.rg.name
-  offer_type          = "Standard"
-  kind                = "GlobalDocumentDB"
-  automatic_failover_enabled = false
-  free_tier_enabled = true
-  geo_location {
-    location          = azurerm_resource_group.rg.location
-    failover_priority = 0
-  }
-  consistency_policy {
-    consistency_level       = "BoundedStaleness"
-    max_interval_in_seconds = 300
-    max_staleness_prefix    = 100000
-  }
-} 
